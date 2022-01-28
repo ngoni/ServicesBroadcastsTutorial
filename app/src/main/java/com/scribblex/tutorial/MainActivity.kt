@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 import com.scribblex.tutorial.receivers.AirPlaneModeReceiver
 import com.scribblex.tutorial.receivers.LocalBroadCastReceiver
+import com.scribblex.tutorial.services.BackgroundServiceExample
 import com.scribblex.tutorial.services.ForegroundServiceExample
 import com.scribblex.tutorial.utils.Constants
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var airPlaneModeReceiver: AirPlaneModeReceiver
     private lateinit var localBroadCastReceiver: LocalBroadCastReceiver
     private lateinit var foregroundServiceIntent: Intent
+    private lateinit var backgroundServiceIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initServices() {
         startForegroundService()
+        startBackgroundService()
     }
 
     private fun initLocalBroadcastReceiver() {
@@ -81,9 +84,20 @@ class MainActivity : AppCompatActivity() {
         stopService(foregroundServiceIntent)
     }
 
+    private fun startBackgroundService() {
+        backgroundServiceIntent = Intent(this, BackgroundServiceExample::class.java).also {
+            startService(it)
+        }
+    }
+
+    private fun cancelBackgroundService() {
+        stopService(backgroundServiceIntent)
+    }
+
     private fun cleanUpComponents() {
         unregisterReceiver(airPlaneModeReceiver)
         LocalBroadcastManager.getInstance(this).unregisterReceiver(localBroadCastReceiver)
         cancelForegroundService()
+        cancelBackgroundService()
     }
 }
