@@ -35,6 +35,14 @@
             android:name=".services.ForegroundServiceExample"
             android:exported="false" />
 
+        <service
+            android:name=".services.BackgroundServiceExample"
+            android:exported="false" />
+
+        <service
+            android:name=".services.BoundBackgroundServiceExample"
+            android:exported="false" />
+
     </application>
 
 </manifest>
