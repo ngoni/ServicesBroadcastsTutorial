@@ -1,17 +1,20 @@
 package com.scribblex.tutorial
 
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-
 import com.scribblex.tutorial.receivers.AirPlaneModeReceiver
 import com.scribblex.tutorial.receivers.LocalBroadCastReceiver
 import com.scribblex.tutorial.services.BackgroundServiceExample
+import com.scribblex.tutorial.services.BoundBackgroundServiceExample
 import com.scribblex.tutorial.services.ForegroundServiceExample
 import com.scribblex.tutorial.utils.Constants
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +22,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var localBroadCastReceiver: LocalBroadCastReceiver
     private lateinit var foregroundServiceIntent: Intent
     private lateinit var backgroundServiceIntent: Intent
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
+            val binder = service as BoundBackgroundServiceExample.LocalBinder
+            val num: Int = binder.getService().randomNumber
+            Log.d(TAG, "Bound Service Connected - Number: $num")
+        }
+
+        override fun onServiceDisconnected(className: ComponentName?) {
+            Log.d(TAG, "Bound Service Disconnected")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +45,16 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cleanUpComponents()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startBoundBackgroundService()
+    }
+
+    override fun onStop() {
+        cancelBoundBackgroundService()
+        super.onStop()
     }
 
     private fun initComponents() {
@@ -92,6 +117,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun cancelBackgroundService() {
         stopService(backgroundServiceIntent)
+    }
+
+    private fun startBoundBackgroundService() {
+        Intent(this, BoundBackgroundServiceExample::class.java).also { intent ->
+            bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+    private fun cancelBoundBackgroundService() {
+        unbindService(connection)
     }
 
     private fun cleanUpComponents() {
