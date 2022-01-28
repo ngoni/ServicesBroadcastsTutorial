@@ -21,31 +21,44 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initServices()
-        initReceivers()
+        initComponents()
         triggerLocalBroadcast()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(airPlaneModeReceiver)
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(localBroadCastReceiver)
-        cancelService()
+        cleanUpComponents()
+    }
+
+    private fun initComponents() {
+        initServices()
+        initReceivers()
     }
 
     private fun initReceivers() {
-        val airplaneModeFilter = IntentFilter().apply {
-            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
-        }
-        airPlaneModeReceiver = AirPlaneModeReceiver()
-        registerReceiver(airPlaneModeReceiver, airplaneModeFilter)
+        initAirplaneModeReceiver()
+        initLocalBroadcastReceiver()
+    }
 
+    private fun initServices() {
+        startForegroundService()
+    }
+
+    private fun initLocalBroadcastReceiver() {
         val localBroadcastFilter = IntentFilter().apply {
             addAction(Constants.ACTION_LOCAL_BROADCAST)
         }
         localBroadCastReceiver = LocalBroadCastReceiver()
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(localBroadCastReceiver, localBroadcastFilter)
+    }
+
+    private fun initAirplaneModeReceiver() {
+        val airplaneModeFilter = IntentFilter().apply {
+            addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        }
+        airPlaneModeReceiver = AirPlaneModeReceiver()
+        registerReceiver(airPlaneModeReceiver, airplaneModeFilter)
     }
 
     private fun triggerLocalBroadcast() {
@@ -56,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initServices() {
+    private fun startForegroundService() {
         // is it fine to run the below many times?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             foregroundServiceIntent = Intent(this, ForegroundServiceExample::class.java)
@@ -64,7 +77,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun cancelService() {
+    private fun cancelForegroundService() {
         stopService(foregroundServiceIntent)
+    }
+
+    private fun cleanUpComponents() {
+        unregisterReceiver(airPlaneModeReceiver)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(localBroadCastReceiver)
+        cancelForegroundService()
     }
 }
