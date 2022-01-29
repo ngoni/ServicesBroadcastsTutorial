@@ -1,4 +1,4 @@
-package com.scribblex.tutorial
+package com.scribblex.tutorial.ui
 
 import android.content.*
 import android.os.Build
@@ -7,6 +7,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.scribblex.tutorial.R
 import com.scribblex.tutorial.receivers.AirPlaneModeReceiver
 import com.scribblex.tutorial.receivers.LocalBroadCastReceiver
 import com.scribblex.tutorial.services.BackgroundServiceExample

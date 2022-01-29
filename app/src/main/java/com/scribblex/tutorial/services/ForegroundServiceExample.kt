@@ -7,8 +7,8 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.RequiresApi
-import com.scribblex.tutorial.MainActivity
 import com.scribblex.tutorial.R
+import com.scribblex.tutorial.ui.MainActivity
 
 class ForegroundServiceExample : Service() {
 
