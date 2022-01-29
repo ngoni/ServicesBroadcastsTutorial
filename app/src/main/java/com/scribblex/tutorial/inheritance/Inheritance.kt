@@ -3,6 +3,9 @@ package com.scribblex.tutorial.inheritance
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
+import java.io.File
+import javax.sql.DataSource
 
 class Inheritance {
 
@@ -114,4 +117,61 @@ class Inheritance {
         }
 
     }
+
+    // ===================== SEALED CLASSES ========================
+
+    sealed interface Error // has implementations only in same package and module
+
+    sealed class IOError() : Error  // extended only in same package and module
+
+    class FileReaderError(f: File) : IOError()
+    class DatabaseError(source: DataSource) : IOError()
+
+    object RuntimeError : Error
+
+    sealed class AnotherIOError {
+        constructor()
+        private constructor(description: String) : this()  // private is OK
+        //public constructor(code: Int) : this() // Error: public and internal are not allowed
+    }
+
+    // ===================== Location of Direct Subclasses ==========
+
+    open class CustomError() : Error // can be extended wherever it's visible
+
+    // =====================  ENUM CLASSES  ==========================
+    enum class Direction {
+        NORTH, EAST, SOUTH, WEST
+    }
+
+    enum class Color(rgb: Int) {
+        RED(0xFF0000),
+        GREEN(0x00FF00),
+        BLUE(0x0000FF)
+    }
+
+    // =====================  OBJECT EXPRESSIONS  ==========================
+
+    val helloWorld = object {
+        val hello = "Hello"
+        val world = "World"
+
+        // object expressions extend Any, so `override` is required on `toString()`
+        override fun toString() = "$hello $world"
+    }
+
+    // =====================  SINGLETON  ==========================
+
+    object DataProviderManager {
+        fun registerDataProvider() {
+            // ...
+        }
+    }
+
+    class MyClass {
+        companion object Factory {
+            fun create(): MyClass = MyClass()
+        }
+    }
+    val instance = MyClass.create()
 }
