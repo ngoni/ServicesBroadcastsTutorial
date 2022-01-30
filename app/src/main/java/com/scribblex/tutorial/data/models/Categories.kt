@@ -1,4 +1,4 @@
-package com.scribblex.tutorial.retrofit
+package com.scribblex.tutorial.data.models
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,11 +1,10 @@
 package com.scribblex.tutorial.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.scribblex.tutorial.R
-import com.scribblex.tutorial.retrofit.ApiService
+import com.scribblex.tutorial.data.remote.ApiService
 import com.scribblex.tutorial.utils.Constants
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
