@@ -9,9 +9,7 @@ import com.scribblex.tutorial.R
 import com.scribblex.tutorial.data.entities.User
 import com.scribblex.tutorial.data.local.LocalDatabase
 import com.scribblex.tutorial.data.repository.LocalDatabaseRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 private const val TAG = "RoomActivity"
 
@@ -28,11 +26,9 @@ class RoomActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             whenStarted {
-                withContext(Dispatchers.IO) {
-                    val user = User(1, "James")
-                    val user2 = User(2, "Fred")
-                    localDatabaseRepository.insertUsers(listOf(user, user2))
-                }
+                val user = User(1, "James")
+                val user2 = User(2, "Fred")
+                localDatabaseRepository.insertUsers(listOf(user, user2))
             }
         }
 
@@ -43,11 +39,9 @@ class RoomActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             whenStarted {
-                withContext(Dispatchers.IO) {
-                    val users = localDatabaseRepository.getAllUser()
-                    Log.d(TAG, "Number of users: ${users.size}")
-                    Log.d(TAG, "Users: $users")
-                }
+                val users = localDatabaseRepository.getAllUser()
+                Log.d(TAG, "Number of users: ${users.size}")
+                Log.d(TAG, "Users: $users")
             }
         }
     }
