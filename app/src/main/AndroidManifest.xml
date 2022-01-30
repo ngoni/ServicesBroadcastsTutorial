@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tutorial">
         <activity
-            android:name=".ui.DataStoreActivity"
+            android:name=".ui.RoomActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -29,6 +29,8 @@
         <activity android:name=".ui.OkhttpActivity" />
 
         <activity android:name=".ui.RetrofitActivity" />
+
+        <activity android:name=".ui.DataStoreActivity" />
 
         <!-- Deprecated after targetSdkVersion=25 -->
         <receiver
