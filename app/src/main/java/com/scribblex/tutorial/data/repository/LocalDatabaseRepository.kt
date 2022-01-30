@@ -2,15 +2,25 @@ package com.scribblex.tutorial.data.repository
 
 import com.scribblex.tutorial.data.entities.User
 import com.scribblex.tutorial.data.local.UsersDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LocalDatabaseRepository(private val usersDao: UsersDao) {
 
-    fun getAllUser() = usersDao.getAllUsers()
+    suspend fun getAllUser() = withContext(Dispatchers.IO) {
+        usersDao.getAllUsers()
+    }
 
-    fun insertUsers(users: List<User>) = usersDao.insertUser(users)
+    suspend fun insertUsers(users: List<User>) = withContext(Dispatchers.IO) {
+        usersDao.insertUser(users)
+    }
 
-    fun deleteUser(user: User) = usersDao.deleteUser(user)
+    suspend fun deleteUser(user: User) = withContext(Dispatchers.IO) {
+        usersDao.deleteUser(user)
+    }
 
-    fun updateUser(user: User) = usersDao.updateUser(user)
+    suspend fun updateUser(user: User) = withContext(Dispatchers.IO) {
+        usersDao.updateUser(user)
+    }
 
 }
