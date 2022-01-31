@@ -58,7 +58,20 @@ dependencies {
     // Lifecycle Scope
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
 
+    // Testing
     testImplementation 'junit:junit:4.+'
+    // Context
+    testImplementation "androidx.test:core-ktx:1.4.0"
+    androidTestImplementation "androidx.test:core-ktx:1.4.0"
+    // Mockito-Kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    // Coroutines-test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+    // Architecture core testing
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    // Robolectric
+    testImplementation "org.robolectric:robolectric:4.7.3"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

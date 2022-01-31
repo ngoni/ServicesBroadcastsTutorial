@@ -5,8 +5,11 @@ import com.scribblex.tutorial.data.entities.User
 
 @Dao
 interface UsersDao {
-    @Query("SELECT * FROM USERS")
+    @Query("SELECT * FROM Users")
     fun getAllUsers(): List<User>
+
+    @Query("SELECT * FROM Users WHERE id = :userId ")
+    fun getUser(userId: Int): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: List<User>)

@@ -31,7 +31,6 @@ class RoomActivity : AppCompatActivity() {
                 localDatabaseRepository.insertUsers(listOf(user, user2))
             }
         }
-
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
