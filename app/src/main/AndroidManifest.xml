@@ -24,13 +24,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity"
+            android:exported="true"/>
 
-        <activity android:name=".ui.OkhttpActivity" />
+        <activity android:name=".ui.OkhttpActivity"
+            android:exported="true"/>
 
-        <activity android:name=".ui.RetrofitActivity" />
+        <activity android:name=".ui.RetrofitActivity"
+            android:exported="true"/>
 
-        <activity android:name=".ui.DataStoreActivity" />
+        <activity android:name=".ui.DataStoreActivity"
+            android:exported="true"/>
 
         <!-- Deprecated after targetSdkVersion=25 -->
         <receiver

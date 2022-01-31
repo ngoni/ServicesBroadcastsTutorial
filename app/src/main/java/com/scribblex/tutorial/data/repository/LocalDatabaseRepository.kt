@@ -23,4 +23,8 @@ class LocalDatabaseRepository(private val usersDao: UsersDao) {
         usersDao.updateUser(user)
     }
 
+    suspend fun getUser(userId: Int) = withContext(Dispatchers.IO) {
+        usersDao.getUser(userId)
+    }
+
 }
